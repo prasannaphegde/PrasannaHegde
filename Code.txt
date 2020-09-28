@@ -1,0 +1,58 @@
+#Open Sample_input.txt and read its contents
+input = open("C:\\Users\\Prasanna Hegde\\Desktop\\highpeak\\Sample_input.txt", "r")
+with open("C:\\Users\\Prasanna Hegde\\Desktop\\highpeak\\Sample_input.txt", "r") as file:
+    #Read first line and get Number of Employees
+    fline = file.readline()
+    first_line = file.readlines()
+    #Convert number of employees to integer
+    emp = int(fline[-2])
+    print("No of Employees: ",emp)
+    #Create a list to hold Goodie values
+    converted_list = []
+    for element in first_line:
+        #Remove '\n'
+        converted_list.append(element.strip())
+    #Remove Goodies and prices as we don't need that
+    converted_list.remove("Goodies and Prices:")
+    #Remove blank spaces
+    while("" in converted_list) :
+        converted_list.remove("")
+    #Remove number of employees line(First element from the list)
+    converted_list.pop(0)
+#Since I was not able to convert to dictionary , I am assigning manually
+goodies = {'Fitbit Plus':7980,'IPods':22349,'MI Band':999,'Cult Pass':2799,'Digital Camera':11101,'Alexa':9999,'Sandwich Toaster':2195,'Microwave Oven':9800,'Scale':4999}
+#Contains only goodies
+item = goodies.keys()
+#Contains only prices
+price = goodies.values()
+#Function declaration to Return difference between the low price goodie and the high price goodie selected is minimum.
+def minDiff(arr,n,k):
+   #taking a random big value for comparision
+    result = 2147483647
+    # Sorting the array.
+    arr.sort()
+    # Find minimum value
+    for i in range(n-k+1):
+        result = int(min(result, arr[i+k-1] - arr[i]))
+    #return the minimum difference value
+    return result
+ 
+#Execute only if employee count is less than 10 as there are only 10 goodies 
+if(emp<10):
+    #Converting and Passing all the price array in list format 
+    arr= list(price)
+    #n is the number of elements in the array - which is 10
+    n =len(arr)
+    #k is the employee count from the input file
+    k = emp
+    # Variable to store output
+    finalOutput = str(minDiff(arr, n, k))
+    print("The difference between the chosen goodie with highest price and the lowest price is:",minDiff(arr, n, k))
+    with open('C:\\Users\\Prasanna Hegde\\Desktop\\highpeak\\Sample_output.txt', 'a') as f:
+        #print('C:\\Users\\Prasanna Hegde\\Documents\\Goodies.py', Sample_output.txt, file=f)
+        f.write("The difference between the chosen goodie with highest price and the lowest price is:")
+        f.write(finalOutput)
+        f.close()
+#If employee count is more than 10
+else:
+    print("Employee count should be less than 10")
